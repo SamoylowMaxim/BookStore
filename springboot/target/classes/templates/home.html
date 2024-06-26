@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Книжный магазин</title>
+</head>
+<body>
+<style>
+    td {
+      padding: 0 15px;
+    }
+</style>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Автор</th>
+        <th>Язык</th>
+        <th>Издательство</th>
+        <th>Год издания</th>
+        <th>Жанр</th>
+        <th>ISBN</th>
+        <th>Цена</th>
+        <th>Страниц</th>
+        <th>Аннотация</th>
+        <th>Рейтинг</th>
+        <th>Новинка</th>
+        <th>Количество</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.name}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.language}"></td>
+        <td th:text="${book.publisher}"></td>
+        <td th:text="${book.publishYear}"></td>
+        <td th:text="${book.genre}"></td>
+        <td th:text="${book.ISBN}"></td>
+        <td th:text="${book.price}"></td>
+        <td th:text="${book.pages}"></td>
+        <td th:text="${book.annotation}"></td>
+        <td th:text="${book.rating}"></td>
+        <td th:text="${book.isNew} ? 'Да' : 'Нет'"></td>
+        <td th:text="${book.amount}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
