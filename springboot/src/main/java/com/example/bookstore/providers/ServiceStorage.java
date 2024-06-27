@@ -1,12 +1,12 @@
 package com.example.bookstore.providers;
 
 import com.example.bookstore.entities.Book;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-public class BookStorage {
+@Service
+public class ServiceStorage {
     private List<Book> books = new ArrayList<>(List.of(
             new Book("Война и мир", "Л.Н.Толстой", "Русский",
                     "Азбука", 2022, "Роман", "978-5-389-06256-6", 500, 1300,
