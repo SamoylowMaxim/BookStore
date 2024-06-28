@@ -16,31 +16,21 @@
     <tr>
         <th>Название</th>
         <th>Автор</th>
-        <th>Год издания</th>
-        <th>Жанр</th>
         <th>Цена</th>
-        <th>Страниц</th>
-        <th>Рейтинг</th>
-        <th>Новинка</th>
         <th>Количество</th>
-        <th></th>
+        <th>Стоимость</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="book : ${books}">
+    <tr th:each="book : ${cart}">
         <td><a th:href="@{/book/(id=${book.id})}" th:text="${book.name}"></a></td>
         <td th:text="${book.author}"></td>
-        <td style="text-align: center;" th:text="${book.publishYear}"></td>
-        <td th:text="${book.genre}"></td>
         <td style="text-align: center;" th:text="${book.price}"></td>
-        <td style="text-align: center;" th:text="${book.pages}"></td>
-        <td style="text-align: center;" th:text="${book.rating}"></td>
-        <td style="text-align: center;" th:text="${book.isNew} ? 'Да' : 'Нет'"></td>
         <td style="text-align: center;" th:text="${book.amount}"></td>
-        <td th:text="${book.status}"></td>
+        <td style="text-align: center;" th:text="${book.total}"></td>
     </tr>
     </tbody>
 </table>
-
+<h2 th:text="|ИТОГО к оплате: ${total}"></h2>
 </body>
 </html>
