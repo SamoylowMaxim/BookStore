@@ -21,7 +21,6 @@ public class EmployeeController {
     }
     @GetMapping("/add-book")
     public String bookForm(Model model) {
-        model.addAttribute("id", storageService.getCount());
         model.addAttribute("genres", storageService.getGenres());
         model.addAttribute("languages", storageService.getLanguages());
         return "bookForm";

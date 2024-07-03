@@ -13,7 +13,7 @@ public class BookDaO {
     private int pages;
     private String annotation;
     private Integer rating;
-    private boolean isNew;
+    private Boolean isNew;
     private int amount;
     private Integer cover;
 
@@ -62,7 +62,7 @@ public class BookDaO {
         return rating;
     }
 
-    public boolean isNew() {
+    public Boolean isNew() {
         return isNew;
     }
 
@@ -73,7 +73,7 @@ public class BookDaO {
         return cover;
     }
 
-    public BookDaO(int id, String name, String author, String language, int publishYear, String genre, String ISBN, float price, int pages, String annotation, Integer rating, boolean isNew, int amount, Integer cover) {
+    public BookDaO(int id, String name, String author, String language, int publishYear, String genre, String ISBN, float price, int pages, String annotation, Integer rating, Boolean isNew, int amount, Integer cover) {
         this.id = id;
         this.name = name;
         this.author = author;

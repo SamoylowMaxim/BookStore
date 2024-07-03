@@ -3,6 +3,7 @@ package com.example.bookstore.providers;
 import com.example.bookstore.entities.BookDaO;
 import org.springframework.stereotype.Repository;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,42 +11,109 @@ import java.util.Map;
 
 @Repository
 public class DaOService {
-    private static int count = 1;
-    private static Map<Integer, BookDaO> booksMap = new HashMap<>();
+    private static final String URL = "jdbc:h2:mem:testdb";
+    private static final String USER = "sa";
+    private static final String PASSWORD = "";
+
+
+    public List<BookDaO> getBooks() throws SQLException {
+        String sql = "SELECT * FROM books";
+        List<BookDaO> books = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                books.add(mapResultSetToBook(resultSet));
+            }
+        }
+
+        return books;
+    }
+
+    private BookDaO mapResultSetToBook(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String name = resultSet.getString("name");
+        String author = resultSet.getString("author");
+        String bookLanguage = resultSet.getString("book_language");
+        int publishYear = resultSet.getInt("publish_year");
+        String genre = resultSet.getString("genre");
+        String isbn = resultSet.getString("isbn");
+        float price = resultSet.getFloat("price");
+        int pages = resultSet.getInt("pages");
+        String annotation = resultSet.getString("annotation");
+        Integer rating = null;
+        int ratingValue = resultSet.getInt("rating");
+        if (!resultSet.wasNull()) {
+            rating = ratingValue;
+        }
+        boolean isNew = resultSet.getBoolean("is_new");
+        int amount = resultSet.getInt("amount");
+        Integer cover = null;
+        int coverValue = resultSet.getInt("cover");
+        if (!resultSet.wasNull()) {
+            cover = coverValue;
+        }
+
+        return new BookDaO(id, name, author, bookLanguage, publishYear, genre, isbn, price, pages, annotation, rating, isNew, amount, cover);
+    }
+
     private static List<String> genres = List.of("Роман", "Фэнтези", "Детектив", "Научная фантастика");
     private static List<String> languages = List.of("Русский", "Английский", "Французский", "Итальянский");
 
-    static {
-        booksMap.put(count, new BookDaO(count, "Война и мир", "Л.Н.Толстой", "Русский",
-                2022, "Роман", "978-5-389-06256-6", 500, 1300,
-                "Хорошо известный классический роман-эпопея Льва Толстого о эпохе завоевательных походов Наполеона.",
-                9, true, 3, 1));
-        count++;
-    }
 
-    public static int getCount() {
-        return count;
-    }
-
-    public List<BookDaO> getBooks() {
-        return new ArrayList<>(booksMap.values());
-    }
-
-    public void addBook(BookDaO bookDaO) {
-        bookDaO.setId(count);
-        booksMap.put(count++, bookDaO);
+    public void addBook(BookDaO book) {
+        String sql = "INSERT INTO BOOKS (NAME, AUTHOR, BOOK_LANGUAGE, PUBLISH_YEAR, GENRE, ISBN, PRICE, PAGES, ANNOTATION, RATING, IS_NEW, AMOUNT, COVER) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, book.getName());
+            statement.setString(2, book.getAuthor());
+            statement.setString(3, book.getLanguage());
+            statement.setInt(4, book.getPublishYear());
+            statement.setString(5, book.getGenre());
+            statement.setString(6, book.getISBN());
+            statement.setDouble(7, book.getPrice());
+            statement.setInt(8, book.getPages());
+            statement.setString(9, book.getAnnotation());
+            if (book.getRating() != null) {
+                statement.setInt(10, book.getRating());
+            }
+            else {
+                statement.setNull(10, Types.INTEGER);
+            }
+            if (book.isNew() != null) {
+                statement.setBoolean(11, book.isNew());
+            }
+            else {
+                statement.setBoolean(11, false);
+            }
+            statement.setInt(12, book.getAmount());
+            if (book.getCover() != null) {
+                statement.setInt(13, book.getCover());
+            }
+            else {
+                statement.setNull(13, Types.INTEGER);
+            }
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error inserting book: " + e.getMessage());
+        }
     }
 
     public BookDaO getBook(int id) {
-        if (booksMap.containsKey(id)) {
-            return booksMap.get(id);
+        String sql = "SELECT * FROM books WHERE id = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return mapResultSetToBook(resultSet);
+            }
         }
-        return null;
-    }
-
-    public BookDaO getBookById(Integer bookId) {
-        if (booksMap.containsKey(bookId)) {
-            return booksMap.get(bookId);
+        catch (SQLException e) {
+            System.out.println("Error fetching book: " + e.getMessage());
         }
         return null;
     }

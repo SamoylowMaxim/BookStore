@@ -6,6 +6,7 @@ import com.example.bookstore.entities.BookDaO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,12 @@ public class StorageService {
     }
     public List<Book> getBooks() {
         List<Book> books = new ArrayList<>();
-        List<BookDaO> booksDaO = daOService.getBooks();
+        List<BookDaO> booksDaO = null;
+        try {
+            booksDaO = daOService.getBooks();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         for (BookDaO bookDaO : booksDaO) {
             books.add(new Book(bookDaO.getId(), bookDaO.getName(), bookDaO.getAuthor(), bookDaO.getLanguage(), bookDaO.getPublishYear(), bookDaO.getGenre(), bookDaO.getISBN(), bookDaO.getPrice(), bookDaO.getPages(), bookDaO.getAnnotation(), bookDaO.getRating(), bookDaO.isNew(), bookDaO.getAmount(), bookDaO.getCover()));
         }
@@ -37,9 +43,6 @@ public class StorageService {
         return new Book(bookDaO.getId(), bookDaO.getName(), bookDaO.getAuthor(), bookDaO.getLanguage(), bookDaO.getPublishYear(), bookDaO.getGenre(), bookDaO.getISBN(), bookDaO.getPrice(), bookDaO.getPages(), bookDaO.getAnnotation(), bookDaO.getRating(), bookDaO.isNew(), bookDaO.getAmount(), bookDaO.getCover());
     }
 
-    public int getCount() {
-        return DaOService.getCount();
-    }
 
     public void addToCart(int id) {
         if (cart.containsKey(id)) {
@@ -61,7 +64,7 @@ public class StorageService {
     public List<CartPosition> getCartBooks() {
         List<CartPosition> booksInCart = new ArrayList<>();
         for (Integer bookId : cart.keySet()) {
-            BookDaO bd = daOService.getBookById(bookId);
+            BookDaO bd = daOService.getBook(bookId);
             CartPosition cartPosition = new CartPosition(bd.getId(), bd.getName(), bd.getAuthor(), bd.getPrice(), cart.get(bookId));
             booksInCart.add(cartPosition);
         }
@@ -70,7 +73,7 @@ public class StorageService {
     public float getCartTotal() {
         float total = 0;
         for (Integer bookId : cart.keySet()) {
-            total +=  cart.get(bookId)*daOService.getBookById(bookId).getPrice();
+            total +=  cart.get(bookId)*daOService.getBook(bookId).getPrice();
         }
         return (float) (Math.round(total * 100.0) / 100.0);
     }
