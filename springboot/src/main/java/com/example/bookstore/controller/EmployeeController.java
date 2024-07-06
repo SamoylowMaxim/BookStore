@@ -26,8 +26,8 @@ public class EmployeeController {
         return "bookForm";
     }
     @PostMapping("/addBook")
-    public String addBook(@ModelAttribute BookDaO bookDaO) {
-        storageService.addBook(bookDaO);
+    public String addBook(@ModelAttribute("bookDaO") BookDaO bookDaO) {
+        storageService.addBook(new BookDaO(null, bookDaO.getName(), bookDaO.getAuthor(), bookDaO.getLanguage(), bookDaO.getPublishYear(), bookDaO.getGenre(), bookDaO.getISBN(), bookDaO.getPrice(), bookDaO.getPages(), bookDaO.getAnnotation(), bookDaO.getRating(), bookDaO.isNew(), bookDaO.getAmount(), bookDaO.getCover()));
         return "redirect:/";
     }
 }

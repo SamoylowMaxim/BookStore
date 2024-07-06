@@ -5,12 +5,7 @@ import com.example.bookstore.entities.CartPosition;
 import com.example.bookstore.entities.BookDaO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class StorageService {
@@ -22,24 +17,20 @@ public class StorageService {
     }
     public List<Book> getBooks() {
         List<Book> books = new ArrayList<>();
-        List<BookDaO> booksDaO = null;
-        try {
-            booksDaO = daOService.getBooks();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        List<BookDaO> booksDaO;
+        booksDaO = daOService.findAll();
         for (BookDaO bookDaO : booksDaO) {
             books.add(new Book(bookDaO.getId(), bookDaO.getName(), bookDaO.getAuthor(), bookDaO.getLanguage(), bookDaO.getPublishYear(), bookDaO.getGenre(), bookDaO.getISBN(), bookDaO.getPrice(), bookDaO.getPages(), bookDaO.getAnnotation(), bookDaO.getRating(), bookDaO.isNew(), bookDaO.getAmount(), bookDaO.getCover()));
         }
         return books;
     }
 
-    public void addBook(BookDaO bookDaO) {
-        daOService.addBook(bookDaO);
+    public BookDaO addBook(BookDaO bookDaO) {
+        return daOService.save(bookDaO);
     }
 
     public Book getBook(int id) {
-        BookDaO bookDaO = daOService.getBook(id);
+        BookDaO bookDaO = daOService.findById(id);
         return new Book(bookDaO.getId(), bookDaO.getName(), bookDaO.getAuthor(), bookDaO.getLanguage(), bookDaO.getPublishYear(), bookDaO.getGenre(), bookDaO.getISBN(), bookDaO.getPrice(), bookDaO.getPages(), bookDaO.getAnnotation(), bookDaO.getRating(), bookDaO.isNew(), bookDaO.getAmount(), bookDaO.getCover());
     }
 
@@ -54,7 +45,7 @@ public class StorageService {
         System.out.println(cart.get(id));
     }
 
-    public Object getCartAmount(int id) {
+    public Integer getCartAmount(int id) {
         if (cart.containsKey(id)) {
             return cart.get(id);
         }
@@ -64,16 +55,23 @@ public class StorageService {
     public List<CartPosition> getCartBooks() {
         List<CartPosition> booksInCart = new ArrayList<>();
         for (Integer bookId : cart.keySet()) {
-            BookDaO bd = daOService.getBook(bookId);
-            CartPosition cartPosition = new CartPosition(bd.getId(), bd.getName(), bd.getAuthor(), bd.getPrice(), cart.get(bookId));
-            booksInCart.add(cartPosition);
+            Optional<BookDaO> bd = daOService.findById(bookId);
+            if (bd.isPresent()) {
+                BookDaO book = bd.get();
+                CartPosition cartPosition = new CartPosition(book.getId(), book.getName(), book.getAuthor(), book.getPrice(), cart.get(bookId));
+                booksInCart.add(cartPosition);
+            }
         }
         return booksInCart;
     }
     public float getCartTotal() {
         float total = 0;
         for (Integer bookId : cart.keySet()) {
-            total +=  cart.get(bookId)*daOService.getBook(bookId).getPrice();
+            Optional<BookDaO> bd = daOService.findById(bookId);
+            if (bd.isPresent()) {
+                BookDaO book = bd.get();
+                total += cart.get(bookId) * book.getPrice();
+            }
         }
         return (float) (Math.round(total * 100.0) / 100.0);
     }
