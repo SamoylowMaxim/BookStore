@@ -1,11 +1,14 @@
 package com.example.bookstore;
 
 import com.example.bookstore.entities.BookDaO;
-import com.example.bookstore.providers.DaOService;
+import com.example.bookstore.providers.BookRepository;
 import com.example.bookstore.providers.StorageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Objects;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -13,7 +16,12 @@ class BookDaOStoreTests {
     @Autowired
     private StorageService storageService;
     @Autowired
-    private DaOService daOService;
+    private BookRepository bookRepository;
+
+    private final int user_id = 1;
+    void init() {
+
+    }
 
     @Test
     void addBook() {
@@ -78,12 +86,12 @@ class BookDaOStoreTests {
                 1);
         BookDaO resultBook = storageService.addBook(testBook);
         for (int i = 1; i<=10; i++)
-            storageService.addToCart(resultBook.getId());
+            storageService.addToCart(user_id, resultBook.getId());
         // Добавлена верная книга в корзину
-        assertThat(storageService.getCartBooks().get(0).getId() == resultBook.getId()).isTrue();
+        assertThat(storageService.getCartBooks(user_id).get(0).getBook().equals(resultBook)).isTrue();
         // Добавлено верное количество книг в корзину
-        assertThat(storageService.getCartAmount(resultBook.getId()) == 10).isTrue();
+        assertThat(storageService.getCartAmount(user_id, resultBook.getId()) == 10).isTrue();
         // Общая стоимость книг в корзине верно расчитана
-        assertThat(storageService.getCartTotal() == 1).isTrue();
+        assertThat(storageService.getCartTotal(user_id) == 1).isTrue();
     }
 }

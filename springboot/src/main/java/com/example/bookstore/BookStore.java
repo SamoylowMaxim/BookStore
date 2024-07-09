@@ -1,10 +1,14 @@
 package com.example.bookstore;
 
 import com.example.bookstore.entities.BookDaO;
-import com.example.bookstore.providers.DaOService;
+import com.example.bookstore.entities.User;
+import com.example.bookstore.providers.BookRepository;
+import com.example.bookstore.providers.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class BookStore {
@@ -14,9 +18,12 @@ public class BookStore {
     }
 
     @Bean
-    public CommandLineRunner init(DaOService repository) {
+    public CommandLineRunner init(BookRepository bookRepository, UserRepository userRepository, @Autowired BCryptPasswordEncoder passwordEncoder) {
         return (args) -> {
-            repository.save(new BookDaO(null,
+            userRepository.save(new User(null, "log", passwordEncoder.encode("123"), "ROLE_USER"));
+            userRepository.save(new User(null, "log2", passwordEncoder.encode("123"), "ROLE_USER"));
+            userRepository.save(new User(null, "admin", passwordEncoder.encode("123"), "ROLE_ADMIN"));
+            bookRepository.save(new BookDaO(null,
                     "Война и мир",
                     "Л.Н.Толстой",
                     "Русский",

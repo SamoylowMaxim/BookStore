@@ -42,7 +42,26 @@
         margin-top: 20px;
         color: #333;
     }
+    header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .logout-button {
+            background-color: transparent;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
 </style>
+<header>
+    <form th:action="@{/logout}" method="post">
+        <button class="logout-button">Выйти из аккаунта</button>
+    </form>
+</header>
 
 <table>
     <thead>
@@ -56,9 +75,9 @@
     </thead>
     <tbody>
     <tr th:each="book : ${cart}">
-        <td><a th:href="@{/book/(id=${book.id})}" th:text="${book.name}"></a></td>
-        <td th:text="${book.author}"></td>
-        <td style="text-align: center;" th:text="${book.price}"></td>
+        <td><a th:href="@{/book/(id=${book.id})}" th:text="${book.book.name}"></a></td>
+        <td th:text="${book.book.author}"></td>
+        <td style="text-align: center;" th:text="${book.book.price}"></td>
         <td style="text-align: center;" th:text="${book.amount}"></td>
         <td style="text-align: center;" th:text="${book.total}"></td>
     </tr>
