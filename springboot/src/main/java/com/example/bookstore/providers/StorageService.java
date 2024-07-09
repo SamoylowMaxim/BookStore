@@ -41,7 +41,16 @@ public class StorageService {
         return new Book(bookDaO.getId(), bookDaO.getName(), bookDaO.getAuthor(), bookDaO.getLanguage(), bookDaO.getPublishYear(), bookDaO.getGenre(), bookDaO.getISBN(), bookDaO.getPrice(), bookDaO.getPages(), bookDaO.getAnnotation(), bookDaO.getRating(), bookDaO.isNew(), bookDaO.getAmount(), bookDaO.getCover());
     }
 
-
+    public void subtractFromCart(int user_id, int book_id, int amount) {
+        CartPositionDaO oldCartPositionDaO = cartRepository.findByUserIdAndBookId(user_id, book_id);
+        if (oldCartPositionDaO.getAmount()-amount <= 0) {
+            cartRepository.delete(oldCartPositionDaO);
+        }
+        else {
+            oldCartPositionDaO.setAmount(oldCartPositionDaO.getAmount()-amount);
+            cartRepository.save(oldCartPositionDaO);
+        }
+    }
     public void addToCart(int user_id, int book_id) {
         CartPositionDaO oldCartPositionDaO = cartRepository.findByUserIdAndBookId(user_id, book_id);
         if (oldCartPositionDaO != null) {

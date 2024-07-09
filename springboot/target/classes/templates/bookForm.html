@@ -46,6 +46,17 @@
         opacity: 1;
     }
 </style>
+<header>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post" th:object="${_csrf}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button class="logout-button" type="submit">Выйти из аккаунта</button>
+        </form>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <button class="logout-button" type="button" onclick="location.href='/login'">Зайти в аккаунт</button>
+    </div>
+</header>
 <h1>Форма книги</h1>
 <form action="#" th:action="@{./addBook}" th:object="${bookDaO}" method="post">
     <input type="hidden" id="id" name="id" th:value="0"/>

@@ -69,7 +69,7 @@ class BookDaOStoreTests {
     }
 
     @Test
-    void addToCart() {
+    void addRemoveCart() {
         BookDaO testBook = new BookDaO(null,
                 "Война и мир",
                 "Л.Н.Толстой",
@@ -93,5 +93,13 @@ class BookDaOStoreTests {
         assertThat(storageService.getCartAmount(user_id, resultBook.getId()) == 10).isTrue();
         // Общая стоимость книг в корзине верно расчитана
         assertThat(storageService.getCartTotal(user_id) == 1).isTrue();
+
+        storageService.subtractFromCart(user_id, resultBook.getId(), 5);
+        // Убрано верное количество книг из корзины
+        assertThat(storageService.getCartAmount(user_id, resultBook.getId()) == 5).isTrue();
+
+        storageService.subtractFromCart(user_id, resultBook.getId(), 5);
+        // Удаление полного количества книг из корзины убирает книгу из корзины
+        assertThat(storageService.getCartBooks(user_id)).isEmpty();
     }
 }

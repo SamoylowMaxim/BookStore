@@ -29,7 +29,6 @@ public class EmployeeController {
     public String bookForm(Model model) {
         model.addAttribute("genres", storageService.getGenres());
         model.addAttribute("languages", storageService.getLanguages());
-        cacheService.setPage("/add-book");
         return "bookForm";
     }
     @PostMapping("/addBook")
