@@ -1,7 +1,8 @@
 E:\СберТех\springboot\src\main\java\com\example\bookstore\providers\StorageService.java
-E:\СберТех\springboot\src\main\java\com\example\bookstore\controller\RootController.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\entities\CartPositionDaO.java
+E:\СберТех\springboot\src\main\java\com\example\bookstore\entities\OrderDaO.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\entities\User.java
+E:\СберТех\springboot\src\main\java\com\example\bookstore\providers\OrderRepository.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\controller\EmployeeController.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\providers\BookRepository.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\providers\CacheService.java
@@ -12,3 +13,4 @@ E:\СберТех\springboot\src\main\java\com\example\bookstore\entities\CartPo
 E:\СберТех\springboot\src\main\java\com\example\bookstore\providers\CartRepository.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\BookStore.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\SecurityConfig.java
+E:\СберТех\springboot\src\main\java\com\example\bookstore\controller\UserController.java

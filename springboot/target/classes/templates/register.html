@@ -49,16 +49,15 @@
         background-color: darkgreen;
     }
 </style>
-<h1>Вход в аккаунт</h1>
-<form method="post" action="/login">
+<h1>Регистрация</h1>
+<form method="post" action="/createAccount">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <label for="username">Логин:</label>
     <input type="text" id="username" name="username"><br><br>
     <label for="password">Пароль:</label>
     <input type="password" id="password" name="password"><br><br>
-    <input type="submit" value="Войти">
+    <input type="submit" value="Создать">
 </form>
-<a th:href="@{/register}">Нет аккаунта? Зарегистрируйтесь здесь!</a>
-
+<a th:href="@{/login}">Уже есть аккаунт? Войдите здесь!</a>
 </body>
 </html>

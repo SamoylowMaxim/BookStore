@@ -16,7 +16,7 @@ public class User implements UserDetails {
     private String login;
     private String password;
     @OneToMany(mappedBy = "user")
-    private List<CartPositionDaO> cartPositions;
+    private List<OrderDaO> orders;
 
     private String role;
 

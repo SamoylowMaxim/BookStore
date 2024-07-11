@@ -71,7 +71,7 @@ public class BookDaO implements Serializable {
         return rating;
     }
 
-    public Boolean isNew() {
+    public Boolean getIsNew() {
         return isNew;
     }
 
@@ -150,8 +150,8 @@ public class BookDaO implements Serializable {
         this.rating = rating;
     }
 
-    public void setNew(Boolean aNew) {
-        isNew = aNew;
+    public void setIsNew(Boolean isNew) {
+        this.isNew = isNew;
     }
 
     public void setAmount(int amount) {
@@ -178,7 +178,7 @@ public class BookDaO implements Serializable {
                 Float.compare(book.getPrice(), getPrice()) == 0 &&
                 Objects.equals(getAnnotation(), book.getAnnotation()) &&
                 Objects.equals(getRating(), book.getRating()) &&
-                Objects.equals(isNew(), book.isNew()) &&
+                Objects.equals(getIsNew(), book.getIsNew()) &&
                 Objects.equals(getCover(), book.getCover());
     }
 }

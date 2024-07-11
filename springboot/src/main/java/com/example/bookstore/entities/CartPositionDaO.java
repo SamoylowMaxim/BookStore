@@ -11,18 +11,23 @@ public class CartPositionDaO {
     @JoinColumn(name = "book_id", nullable = false)
     private BookDaO book;
     private int amount;
+
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "order_id")
+    private OrderDaO order;
 
     public CartPositionDaO() {
 
     }
-    public CartPositionDaO(Integer id, BookDaO book, int amount, User user) {
+    public CartPositionDaO(Integer id, BookDaO book, int amount, OrderDaO order) {
         this.id = id;
         this.book = book;
         this.amount = amount;
-        this.user = user;
+        this.order = order;
+    }
+
+    public void setBook(BookDaO book) {
+        this.book = book;
     }
 
     public Integer getId() {
@@ -33,17 +38,11 @@ public class CartPositionDaO {
         return amount;
     }
 
-    public User getUser() {
-        return user;
-    }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public void setAmount(int amount) {
         this.amount = amount;
@@ -51,5 +50,13 @@ public class CartPositionDaO {
 
     public BookDaO getBook() {
         return book;
+    }
+
+    public OrderDaO getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderDaO order) {
+        this.order = order;
     }
 }
