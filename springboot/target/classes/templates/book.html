@@ -156,7 +156,7 @@
                     <th>Количество:</th>
                     <td th:text="${book.amount}"></td>
                 </tr>
-                <tr>
+                <tr sec:authorize="!hasRole('ROLE_ADMIN')">
                     <th>
                         <form th:action="@{../addToCart}" method="post">
                             <input type="hidden" th:name="bookId" th:value="${book.id}">
@@ -169,7 +169,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr sec:authorize="!hasRole('ROLE_ADMIN')">
                     <th>
                         <form th:if="${amount} > 0" th:action="@{../subtractFromCart}" method="post">
                             <input type="hidden" th:name="bookId" th:value="${book.id}">
