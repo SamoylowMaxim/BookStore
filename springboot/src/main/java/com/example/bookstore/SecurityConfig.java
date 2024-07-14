@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import com.example.bookstore.entities.User;
-import com.example.bookstore.providers.CacheService;
 import com.example.bookstore.providers.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,9 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    private CacheService cacheService;
-
     private class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
         public CustomAuthenticationSuccessHandler() {
@@ -40,9 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
-            String page = cacheService.getPage();
-            cacheService.setPage(null);
-            return page != null ? page : "/";
+            return "/";
         }
     }
 

@@ -1,13 +1,13 @@
 package com.example.bookstore;
 
 import com.example.bookstore.entities.BookDaO;
+import com.example.bookstore.entities.User;
 import com.example.bookstore.providers.BookRepository;
 import com.example.bookstore.providers.StorageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Objects;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,6 +17,8 @@ class BookDaOStoreTests {
     private StorageService storageService;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     private final int user_id = 1;
     void init() {
@@ -101,5 +103,17 @@ class BookDaOStoreTests {
         storageService.subtractFromCart(user_id, resultBook.getId(), 5);
         // Удаление полного количества книг из корзины убирает книгу из корзины
         assertThat(storageService.getCartBooks(user_id)).isEmpty();
+    }
+
+    @Test
+    void createAccount() {
+        // Аккаунт успешно добавлен
+        assertThat(storageService.addUser("abc", "123")).isTrue();
+        User user = storageService.getUser(4);
+        // Аккаунт добавлен верно
+        assertThat(user.getLogin().equals("abc")).isTrue();
+        assertThat(user.getRole().equals("ROLE_USER")).isTrue();
+        // Аккаунт с повторяющимся логином не добавлен
+        assertThat(storageService.addUser("abc", "123")).isFalse();
     }
 }

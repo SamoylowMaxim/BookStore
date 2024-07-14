@@ -164,7 +164,17 @@ public class StorageService {
         return orderRepository.findByUserId(id);
     }
 
-    public void addUser(String username, String password) {
-        userRepository.save(new User(null, username, passwordEncoder.encode(password), "ROLE_USER"));
+    public boolean addUser(String username, String password) {
+        if (userRepository.existsByLogin(username)) {
+            return false;
+        }
+        else {
+            userRepository.save(new User(null, username, passwordEncoder.encode(password), "ROLE_USER"));
+            return true;
+        }
+    }
+
+    public User getUser(int id) {
+        return  userRepository.findById(id);
     }
 }

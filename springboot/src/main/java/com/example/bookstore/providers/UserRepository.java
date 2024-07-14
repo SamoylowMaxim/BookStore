@@ -13,6 +13,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     User findById(int id);
     User findByLogin(String login);
-    int curUser = 1;
+    boolean existsByLogin(String login);
 
 }

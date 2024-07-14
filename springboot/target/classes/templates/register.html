@@ -53,12 +53,15 @@
     }
 </style>
 <h1>Регистрация</h1>
+<div th:if="${successful} == false" style="text-align: center;">
+    <h2>Не удалось создать аккаунт: Имя уже занятно!</h2>
+</div>
 <form method="post" action="/createAccount">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <label for="username">Логин:</label>
-    <input type="text" id="username" name="username"><br><br>
+    <input type="text" id="username" name="username" minlength="3" maxlength="99"><br><br>
     <label for="password">Пароль:</label>
-    <input type="password" id="password" name="password"><br><br>
+    <input type="password" id="password" name="password" minlength="3" maxlength="99"><br><br>
     <input type="submit" value="Создать">
 </form>
 <a th:href="@{/login}">Уже есть аккаунт? Войдите здесь!</a>

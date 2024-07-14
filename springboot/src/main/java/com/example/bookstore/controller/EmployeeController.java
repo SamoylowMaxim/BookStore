@@ -1,7 +1,6 @@
 package com.example.bookstore.controller;
 
 import com.example.bookstore.entities.BookDaO;
-import com.example.bookstore.providers.CacheService;
 import com.example.bookstore.providers.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,14 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/employee")
 public class EmployeeController {
     private StorageService storageService;
-    private CacheService cacheService;
     @Autowired
     public void setStorageService(StorageService storageService) {
         this.storageService = storageService;
-    }
-    @Autowired
-    public void setCacheService(CacheService cacheService) {
-        this.cacheService = cacheService;
     }
     @GetMapping("/add-book")
     public String bookForm(Model model) {

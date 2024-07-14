@@ -5,7 +5,6 @@ E:\СберТех\springboot\src\main\java\com\example\bookstore\entities\User.j
 E:\СберТех\springboot\src\main\java\com\example\bookstore\providers\OrderRepository.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\controller\EmployeeController.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\providers\BookRepository.java
-E:\СберТех\springboot\src\main\java\com\example\bookstore\providers\CacheService.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\entities\Book.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\providers\UserRepository.java
 E:\СберТех\springboot\src\main\java\com\example\bookstore\entities\BookDaO.java

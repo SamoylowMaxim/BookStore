@@ -109,17 +109,25 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model model, @RequestParam(required = false) Boolean successful) {
+        if (successful != null && !successful) {
+            model.addAttribute("successful", successful);
+        }
         return "register";
     }
 
     @PostMapping("/createAccount")
     public String createAccount(@RequestParam("username") String username, @RequestParam("password") String password) {
-        storageService.addUser(username, password);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authentication = authenticationManager.authenticate(token);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "redirect:/";
+        boolean successful = storageService.addUser(username, password);
+        if (successful) {
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+            Authentication authentication = authenticationManager.authenticate(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return "redirect:/";
+        }
+        else {
+            return "redirect:/register?successful=false";
+        }
     }
 
 }
