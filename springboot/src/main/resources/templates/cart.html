@@ -3,139 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Книжный магазин</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        td:nth-child(3), td:nth-child(4), td:nth-child(5) {
+            text-align: center;
+        }
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #666;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-    th, td {
-        border: 1px solid #ccc;
-        padding: 10px;
-        text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-    }
-    td:nth-child(3), td:nth-child(4), td:nth-child(5) {
-        text-align: center;
-    }
-    a {
-        color: #333;
-        text-decoration: none;
-    }
-    a:hover {
-        color: #666;
-    }
-    button {
-        background-color: green;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-        width: 100%;
-        opacity: 0.9;
-    }
-    button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-    button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-    button:hover:not(.red-button) {
-        background-color: darkgreen;
-    }
-    .red-button {
-        background-color: #f44336;
-    }
-    .red-button:hover {
-        background-color: #e53935;
-    }
-    .button-margin {
-        margin-bottom: 10px;
-    }
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-        background-color: #333;
-        color: white;
-    }
-    header .logo {
-        display: flex;
-        align-items: center;
-    }
-    header .logo h1 {
-        font-size: 24px;
-        margin: 0;
-        color: white;
-    }
-    header nav {
-        display: flex;
-        align-items: center;
-    }
-    header nav a {
-        color: white;
-        text-decoration: none;
-        margin-left: 20px;
-        font-size: 16px;
-        transition: color 0.3s ease;
-    }
-    header nav a:hover {
-        color: #ddd;
-    }
-    .common-button {
-        background-color: green;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-    }
-
-    .common-button:hover {
-        background-color: darkgreen;
-    }
-    h1, h2 {
-        text-align: center;
-    }
-</style>
-<header>
-    <div class="logo">
-        <a href="/"><h1>Книжный магазин</h1></a>
-    </div>
-    <nav>
-        <a href="/">Каталог</a>
-        <a href="/cart" sec:authorize="hasRole('ROLE_USER')">Корзина</a>
-        <a href="/orders" sec:authorize="hasRole('ROLE_USER')">Заказы</a>
-        <a href="/employee/add-book" sec:authorize="hasRole('ROLE_ADMIN')">Добавить книгу</a>
-        <form th:action="@{/logout}" method="post" th:object="${_csrf}" sec:authorize="isAuthenticated()">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <a href="javascript:void(0)" onclick="this.closest('form').submit()">Выйти из аккаунта</a>
-        </form>
-        <a href="/login" sec:authorize="isAnonymous()">Зайти в аккаунт</a>
-    </nav>
-</header>
+<div th:replace="header.html"></div>
 <h1>Текущий заказ:</h1>
 <div th:if="${successful} == false">
     <h2>Некоторые товары в Вашей корзине были сокращены, поскольку их больше нет в требуемом количестве!</h2>
 </div>
-
 <table>
     <thead>
     <tr>

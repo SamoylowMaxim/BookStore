@@ -1,0 +1,230 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo h1 {
+    font-size: 24px;
+    margin: 0;
+    color: white;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #ddd;
+}
+
+.common-button {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.common-button:hover {
+    background-color: darkgreen;
+}
+
+h1, h2, a {
+    color: #333;
+}
+
+button {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: auto;
+    opacity: 0.9;
+    border-radius: 4px;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button:hover:not(.red-button) {
+    background-color: darkgreen;
+}
+
+.red-button {
+    background-color: #f44336;
+}
+
+.red-button:hover {
+    background-color: #e53935;
+}
+
+.button-margin {
+    margin-bottom: 10px;
+}
+
+.centered-title {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.book-catalog {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.book-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    padding: 15px;
+    text-align: center;
+}
+
+.book-card img {
+    max-width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.book-card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.book-card p {
+    margin: 5px 0;
+}
+
+.book-card .price {
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.book-card .new {
+    color: #2ecc71;
+}
+
+.book-card .status {
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.book-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 1200px;
+    border: 1px solid #e0e0e0;
+}
+
+.book-image {
+    flex: 1;
+    max-width: 300px;
+    text-align: center;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+}
+
+.book-image img {
+    max-width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-details {
+    flex: 2;
+    padding: 20px;
+}
+
+.book-details .detail-item {
+    margin-bottom: 15px;
+}
+
+.book-details .detail-item h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #555;
+}
+
+.book-details .detail-item p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #777;
+}
+
+.detail-item a {
+    color: #007BFF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.detail-item a:hover {
+    color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+td:nth-child(3), td:nth-child(4), td:nth-child(5) {
+    text-align: center;
+}
