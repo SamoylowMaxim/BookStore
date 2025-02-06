@@ -3,193 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <title>Книжный магазин</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+        }
+        header .logo h1 {
+            font-size: 24px;
+            margin: 0;
+            color: white;
+        }
+        header nav {
+            display: flex;
+            align-items: center;
+        }
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        header nav a:hover {
+            color: #ddd;
+        }
+        .common-button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .common-button:hover {
+            background-color: darkgreen;
+        }
+        h1, h2, a {
+            color: #333;
+        }
+        .book-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 1200px;
+            border: 1px solid #e0e0e0;
+        }
+        .book-image {
+            flex: 1;
+            max-width: 300px;
+            text-align: center;
+            border-right: 1px solid #e0e0e0;
+            padding: 20px;
+        }
+        .book-image img {
+            max-width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .book-details {
+            flex: 2;
+            padding: 20px;
+        }
+        .book-details .detail-item {
+            margin-bottom: 15px;
+        }
+        .book-details .detail-item h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #555;
+        }
+        .book-details .detail-item p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #777;
+        }
+        button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: auto;
+            opacity: 0.9;
+            border-radius: 4px;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        button:hover:not(.red-button) {
+            background-color: darkgreen;
+        }
+        .red-button {
+            background-color: #f44336;
+        }
+        .red-button:hover {
+            background-color: #e53935;
+        }
+        .button-margin {
+            margin-bottom: 10px;
+        }
+        .detail-item a {
+            color: #007BFF;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .detail-item a:hover {
+            color: #0056b3;
+        }
+        .centered-title {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-    }
-    h1, h2, a {
-        color: #333;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        border: 1px solid #ccc;
-        padding: 10px;
-        text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-    }
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-    button {
-        background-color: green;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-        width: 100%;
-        opacity: 0.9;
-    }
-    button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-    button:hover:not(.red-button) {
-        background-color: darkgreen;
-    }
-    .red-button {
-        background-color: #f44336;
-    }
-    .red-button:hover {
-        background-color: #e53935;
-    }
-    .button-margin {
-        margin-bottom: 10px;
-    }
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-        background-color: #f8f9fa;
-    }
-
-    header div:not(:first-child) {
-        margin-left: 10px;
-    }
-    .common-button {
-        background-color: green;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-    }
-
-    .common-button:hover {
-        background-color: darkgreen;
-    }
-</style>
 <header>
-    <div>
-        <h2>Навигатор магазина:</h2>
+    <div class="logo">
+        <a href="/"><h1>Книжный магазин</h1></a>
     </div>
-    <div>
-        <button class="common-button" type="button" onclick="location.href='/'">Каталог</button>
-    </div>
-    <div sec:authorize="hasRole('ROLE_USER')">
-        <button class="common-button" type="button" onclick="location.href='/cart'">Корзина</button>
-    </div>
-    <div sec:authorize="hasRole('ROLE_USER')">
-        <button class="common-button" type="button" onclick="location.href='/orders'">Заказы</button>
-    </div>
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <button class="common-button" type="button" onclick="location.href='/employee/add-book'">Добавить книгу</button>
-    </div>
-    <div sec:authorize="isAuthenticated()">
-        <form th:action="@{/logout}" method="post" th:object="${_csrf}">
+    <nav>
+        <a href="/">Каталог</a>
+        <a href="/cart" sec:authorize="hasRole('ROLE_USER')">Корзина</a>
+        <a href="/orders" sec:authorize="hasRole('ROLE_USER')">Заказы</a>
+        <a href="/employee/add-book" sec:authorize="hasRole('ROLE_ADMIN')">Добавить книгу</a>
+        <form th:action="@{/logout}" method="post" th:object="${_csrf}" sec:authorize="isAuthenticated()">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <button class="common-button" type="submit">Выйти из аккаунта</button>
+            <a href="javascript:void(0)" onclick="this.closest('form').submit()">Выйти из аккаунта</a>
         </form>
-    </div>
-    <div sec:authorize="isAnonymous()">
-        <button class="common-button" type="button" onclick="location.href='/login'">Зайти в аккаунт</button>
-    </div>
+        <a href="/login" sec:authorize="isAnonymous()">Зайти в аккаунт</a>
+    </nav>
 </header>
-<h1 th:text="|'${book.name}', ${book.author}"></h1>
-<table>
-    <tr>
-        <td>
-            <h2 th:if="${book.isNew}">Новинка</h2>
-            <img th:src="|/images/${book.cover}.png|" alt="Обложка" />
-            <h2 th:text="${book.status}"></h2>
-        </td>
-        <td>
-            <table>
-                <tr>
-                    <th>Год издания:</th>
-                    <td th:text="${book.publishYear}"></td>
-                </tr>
-                <tr>
-                    <th>Жанр:</th>
-                    <td th:text="${book.genre}"></td>
-                </tr>
-                <tr>
-                    <th>Язык:</th>
-                    <td th:text="${book.language}"></td>
-                </tr>
-                <tr>
-                    <th>ISBN:</th>
-                    <td th:text="${book.ISBN}"></td>
-                </tr>
-                <tr>
-                    <th>Цена:</th>
-                    <td th:text="${book.price}"></td>
-                </tr>
-                <tr>
-                    <th>Страниц:</th>
-                    <td th:text="${book.pages}"></td>
-                </tr>
-                <tr>
-                    <th>Аннотация:</th>
-                    <td th:text="${book.annotation}"></td>
-                </tr>
-                <tr>
-                    <th>Рейтинг:</th>
-                    <td th:text="${book.rating}"></td>
-                </tr>
-                <tr>
-                    <th>Количество:</th>
-                    <td th:text="${book.amount}"></td>
-                </tr>
-                <tr sec:authorize="!hasRole('ROLE_ADMIN')">
-                    <th>
-                        <form th:action="@{../addToCart}" method="post">
-                            <input type="hidden" th:name="bookId" th:value="${book.id}">
-                            <button type="submit" th:text="${amount} > 0 ? 'Добавить ещё' : 'Добавить в корзину'" th:disabled="${amount} >= ${book.amount}"> </button>
-                        </form>
-                    </th>
-                    <td>
-                        <div th:if="${amount} > 0">
-                            <p>Товар уже есть в корзине в количестве <span th:text="${amount}"></span></p>
-                        </div>
-                    </td>
-                </tr>
-                <tr sec:authorize="!hasRole('ROLE_ADMIN')">
-                    <th>
-                        <form th:if="${amount} > 0" th:action="@{../subtractFromCart}" method="post">
-                            <input type="hidden" th:name="bookId" th:value="${book.id}">
-                            <button class="red-button button-margin" type="submit">Убрать 1</button>
-                        </form>
-                        <form th:if="${amount} > 0" th:action="@{../removeFromCart}" method="post">
-                            <input type="hidden" th:name="bookId" th:value="${book.id}">
-                            <button class="red-button" type="submit">Убрать все</button>
-                        </form>
-                    </th>
-                    <td><a th:href="@{../cart}">Посмотреть, что в корзине</a></td>
-                </tr>
-                <tr>
-
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-
-
+<h1 class="centered-title" th:text="|'${book.name}', ${book.author}"></h1>
+<div class="book-container">
+    <div class="book-image">
+        <h2 th:if="${book.isNew}">Новинка</h2>
+        <img th:src="|/images/${book.cover}.png|" alt="Обложка" />
+        <h2 th:text="${book.status}"></h2>
+    </div>
+    <div class="book-details">
+        <div class="detail-item">
+            <h3>Год издания:</h3>
+            <p th:text="${book.publishYear}"></p>
+        </div>
+        <div class="detail-item">
+            <h3>Жанр:</h3>
+            <p th:text="${book.genre}"></p>
+        </div>
+        <div class="detail-item">
+            <h3>Язык:</h3>
+            <p th:text="${book.language}"></p>
+        </div>
+        <div class="detail-item">
+            <h3>ISBN:</h3>
+            <p th:text="${book.ISBN}"></p>
+        </div>
+        <div class="detail-item">
+            <h3>Цена:</h3>
+            <p th:text="${book.price}"></p>
+        </div>
+        <div class="detail-item">
+            <h3>Страниц:</h3>
+            <p th:text="${book.pages}"></p>
+        </div>
+        <div class="detail-item">
+            <h3>Аннотация:</h3>
+            <p th:text="${book.annotation}"></p>
+        </div>
+        <div class="detail-item">
+            <h3>Рейтинг:</h3>
+            <p th:text="${book.rating} + '/10'"></p>
+        </div>
+        <div class="detail-item">
+            <h3>Количество:</h3>
+            <p th:text="${book.amount}"></p>
+        </div>
+        <div class="detail-item" sec:authorize="!hasRole('ROLE_ADMIN')">
+            <form th:action="@{../addToCart}" method="post">
+                <input type="hidden" th:name="bookId" th:value="${book.id}">
+                <button type="submit" th:text="${amount} > 0 ? 'Добавить ещё' : 'Добавить в корзину'" th:disabled="${amount} >= ${book.amount}"> </button>
+            </form>
+            <div th:if="${amount} > 0">
+                <p>Товар уже есть в корзине в количестве <span th:text="${amount}"></span></p>
+            </div>
+        </div>
+        <div class="detail-item" sec:authorize="!hasRole('ROLE_ADMIN')">
+            <form th:if="${amount} > 0" th:action="@{../subtractFromCart}" method="post">
+                <input type="hidden" th:name="bookId" th:value="${book.id}">
+                <button class="red-button button-margin" type="submit">Убрать 1</button>
+            </form>
+            <form th:if="${amount} > 0" th:action="@{../removeFromCart}" method="post">
+                <input type="hidden" th:name="bookId" th:value="${book.id}">
+                <button class="red-button" type="submit">Убрать все</button>
+            </form>
+            <a th:href="@{../cart}">Посмотреть, что в корзине</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
